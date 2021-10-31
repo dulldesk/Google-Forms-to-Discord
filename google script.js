@@ -1,11 +1,12 @@
 var POST_URL = "WEBBHOOK URL";
 
-function onSubmit(e) {
+function onSubmit(e,ind=-1) {
     var form = FormApp.getActiveForm();
     var allResponses = form.getResponses();
-    var latestResponse = allResponses[allResponses.length - 1];
+    var latestResponse = allResponses[ind === -1 ? allResponses.length - 1 : ind];
     var response = latestResponse.getItemResponses();
     var items = [];
+    const timestamp = latestResponse.getTimestamp().toLocaleString();
 
     for (var i = 0; i < response.length; i++) {
         var question = response[i].getItem().getTitle();
@@ -47,8 +48,9 @@ function onSubmit(e) {
                 "title": "Some nice title here",
               "color": 33023, // This is optional, you can look for decimal colour codes at https://www.webtoolkitonline.com/hexadecimal-decimal-color-converter.html
                 "fields": items,
+                "url": "https://example.com",
                 "footer": {
-                    "text": "Some footer here"
+                    "text": timestamp
                 }
             }]
         })
@@ -56,3 +58,10 @@ function onSubmit(e) {
 
     UrlFetchApp.fetch(POST_URL, options);
 };
+
+function postCurrentResponses() {
+    const allResponses = FormApp.getActiveForm().getResponses();
+    for (let i=0;i<allResponses.length;i++) {
+        onSubmit("",i);
+    }
+}
