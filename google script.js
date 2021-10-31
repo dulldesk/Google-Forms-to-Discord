@@ -1,4 +1,6 @@
 var POST_URL = "WEBBHOOK URL";
+const EMBED_TITLE = "Embed title";
+const EMBED_URL = "https://example.com";
 
 function onSubmit(e,ind=-1) {
     var form = FormApp.getActiveForm();
@@ -45,10 +47,10 @@ function onSubmit(e,ind=-1) {
         "payload": JSON.stringify({
             "content": "‌",
             "embeds": [{
-                "title": "Some nice title here",
+                "title": EMBED_TITLE,
               "color": 33023, // This is optional, you can look for decimal colour codes at https://www.webtoolkitonline.com/hexadecimal-decimal-color-converter.html
                 "fields": items,
-                "url": "https://example.com",
+                "url": EMBED_URL,
                 "footer": {
                     "text": timestamp
                 }
